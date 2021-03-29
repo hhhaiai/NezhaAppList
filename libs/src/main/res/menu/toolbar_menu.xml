@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    >
+
+
+    <item
+        android:id="@+id/RECORDING"
+        android:title="录制脚本"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/RETAINED"
+        android:title="脚本留存"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/INFO_SETING"
+        android:title="参数设置"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/SAVE_PAGER_INFO"
+        android:title="保存本页参数"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/CLOSE_SCREEN"
+        android:title="关闭屏幕"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/UPLOAD"
+        android:title="上传脚本"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/DOWNLOAD"
+        android:title="下载脚本"
+        app:showAsAction="never" />
+</menu>
