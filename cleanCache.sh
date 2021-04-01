@@ -11,7 +11,7 @@ source_common() {
 clean_caches() {
 
   logw "[$filename]clean android studio cache!"
-  dir=("app")
+  dir=("app" "nzlist_libs")
   for element in "${dir[@]}"; do
     #clean task
     rm -rf $element/build/
