@@ -1,4 +1,4 @@
-include ':libs'
+include ':nzlist_libs'
 include ':app'
 // 根目录名称
 rootProject.name = "NezhaAppList"
