@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import me.hhhaiai.nzlist.ui.NezhaListActivity;
+import me.hhhaiai.nzlist.ui.NzListActivity;
 
 public class MainActivity extends Activity {
 
@@ -19,7 +19,7 @@ public class MainActivity extends Activity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnGoGo:
-                startActivity(new Intent(MainActivity.this, NezhaListActivity.class));
+                startActivity(new Intent(MainActivity.this, NzListActivity.class));
                 break;
             default:
                 break;

@@ -1,6 +1,5 @@
 package me.hhhaiai.nzlist.utils.ui;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.text.Editable;
@@ -16,23 +15,22 @@ import android.widget.EditText;
 
 import me.hhhaiai.nzlist.R;
 
-@SuppressLint("AppCompatCustomView")
-public class ClearEditText extends EditText implements OnFocusChangeListener, TextWatcher {
+public class NzSearchEditText extends EditText implements OnFocusChangeListener, TextWatcher {
     /**
      * 删除按钮的引用
      */
     private Drawable mClearDrawable;
 
-    public ClearEditText(Context context) {
+    public NzSearchEditText(Context context) {
         this(context, null);
     }
 
-    public ClearEditText(Context context, AttributeSet attrs) {
+    public NzSearchEditText(Context context, AttributeSet attrs) {
         // 这里构造方法也很重要，不加这个很多属性不能再XML里面定义
         this(context, attrs, android.R.attr.editTextStyle);
     }
 
-    public ClearEditText(Context context, AttributeSet attrs, int defStyle) {
+    public NzSearchEditText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init();
     }

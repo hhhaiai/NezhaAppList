@@ -11,9 +11,7 @@ import java.io.Serializable;
  * @Create: 2016年5月15日 上午2:42:21
  * @Author: sanbo
  */
-public class SortModel implements Serializable {
-    private static final long serialVersionUID = 2717217642208841835L;
-
+public class AppModel implements Serializable {
     private String mAppName; // app名字
     private String mAppVersionName;// app版本
     private String mAppPackageName; // app包名

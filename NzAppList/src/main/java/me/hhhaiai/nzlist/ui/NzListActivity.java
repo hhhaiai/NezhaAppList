@@ -34,14 +34,14 @@ import java.util.List;
 import java.util.Locale;
 
 import me.hhhaiai.nzlist.R;
-import me.hhhaiai.nzlist.model.SortModel;
+import me.hhhaiai.nzlist.model.AppModel;
 import me.hhhaiai.nzlist.utils.AppTypeStyle;
 import me.hhhaiai.nzlist.utils.CharacterParser;
 import me.hhhaiai.nzlist.utils.NzAppLog;
 import me.hhhaiai.nzlist.utils.PinyinComparator;
 import me.hhhaiai.nzlist.utils.UninstallApp;
-import me.hhhaiai.nzlist.utils.ui.ClearEditText;
-import me.hhhaiai.nzlist.utils.ui.SideBar;
+import me.hhhaiai.nzlist.utils.ui.NzSearchEditText;
+import me.hhhaiai.nzlist.utils.ui.NzSideBar;
 
 /**
  * @Copyright © 2016 sanbo Inc. All rights reserved.
@@ -50,21 +50,21 @@ import me.hhhaiai.nzlist.utils.ui.SideBar;
  * @Create: 2016年5月15日 上午2:17:26
  * @Author: sanbo
  */
-public class NezhaListActivity extends Activity {
+public class NzListActivity extends Activity {
 
     private Context mContext;
     private ListView sortListView;
-    private SideBar sideBar;
+    private NzSideBar sideBar;
     private TextView dialog;
-    private NezhaAdapter adapter;
-    private ClearEditText mClearEditText;
+    private NzAdapter adapter;
+    private NzSearchEditText mClearEditText;
     private ProgressDialog proDialog;
     private int Width, Heigt;
     /**
      * 汉字转换成拼音的类
      */
     private CharacterParser characterParser;
-    private List<SortModel> appNameList;
+    private List<AppModel> appNameList;
 
     /**
      * 根据拼音来排列ListView里面的数据类
@@ -84,7 +84,7 @@ public class NezhaListActivity extends Activity {
 
             // 根据a-z进行排序源数据
             Collections.sort(appNameList, pinyinComparator);
-            adapter = new NezhaAdapter(NezhaListActivity.this, appNameList);
+            adapter = new NzAdapter(NzListActivity.this, appNameList);
             sortListView.setAdapter(adapter);
 
             // 设置监听
@@ -118,13 +118,13 @@ public class NezhaListActivity extends Activity {
     }
 
     private void initUI() {
-        sideBar = (SideBar) findViewById(R.id.sidrbar);
+        sideBar = (NzSideBar) findViewById(R.id.sidrbar);
         dialog = (TextView) findViewById(R.id.dialog);
         sideBar.setTextView(dialog);
         // listView
         sortListView = (ListView) findViewById(R.id.country_lvcountry);
         // 检索框
-        mClearEditText = (ClearEditText) findViewById(R.id.filter_edit);
+        mClearEditText = (NzSearchEditText) findViewById(R.id.filter_edit);
     }
 
     /**
@@ -132,7 +132,7 @@ public class NezhaListActivity extends Activity {
      */
     private void setListener() {
         // 设置右侧触摸监听
-        sideBar.setOnTouchingLetterChangedListener(new SideBar.OnTouchingLetterChangedListener() {
+        sideBar.setOnTouchingLetterChangedListener(new NzSideBar.OnTouchingLetterChangedListener() {
 
             @Override
             public void onTouchingLetterChanged(String s) {
@@ -160,13 +160,13 @@ public class NezhaListActivity extends Activity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
 
                 final String[] items = new String[]{"启动应用", "卸载应用", "XX模式运行", "强制停止", "清除数据", "导出APP"};
-                Dialog alertDialog = new AlertDialog.Builder(NezhaListActivity.this).setTitle("操作列表")
+                Dialog alertDialog = new AlertDialog.Builder(NzListActivity.this).setTitle("操作列表")
                         .setIcon(android.R.drawable.btn_star)
                         .setItems(items, new DialogInterface.OnClickListener() {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                SortModel model = (SortModel) adapter.getItem(position);
+                                AppModel model = (AppModel) adapter.getItem(position);
                                 PackageManager pm = null;
                                 Intent i = null;
                                 String pkgName = model.getAppPackageName();
@@ -178,7 +178,7 @@ public class NezhaListActivity extends Activity {
                                         try {
                                             Intent intent = getPackageManager().getLaunchIntentForPackage(pkgName);
                                             startActivity(intent);
-                                            Toast.makeText(NezhaListActivity.this, "启动 [" + pkgName + "] 完毕!",
+                                            Toast.makeText(NzListActivity.this, "启动 [" + pkgName + "] 完毕!",
                                                     Toast.LENGTH_SHORT).show();
                                         } catch (Throwable e) {
                                             NzAppLog.e(e);
@@ -263,15 +263,15 @@ public class NezhaListActivity extends Activity {
      *
      * @return
      */
-    private List<SortModel> filledData() {
+    private List<AppModel> filledData() {
 
         // 1.
         List<PackageInfo> packages = getPackageManager().getInstalledPackages(0);
-        List<SortModel> mSortList = new ArrayList<SortModel>();
+        List<AppModel> mSortList = new ArrayList<AppModel>();
         for (int i = 0; i < packages.size(); i++) {
             PackageInfo packageInfo = packages.get(i);
             String appName = packageInfo.applicationInfo.loadLabel(getPackageManager()).toString();
-            SortModel sortModel = new SortModel();
+            AppModel sortModel = new AppModel();
             sortModel.setName(appName);
             sortModel.setAppVersionName(packageInfo.versionName);
             sortModel.setAppPackageName(packageInfo.packageName);
@@ -279,9 +279,9 @@ public class NezhaListActivity extends Activity {
             sortModel.setIcon(packageInfo.applicationInfo.loadIcon(getPackageManager()));
 
             if (AppTypeStyle.isSystemApp(packageInfo) || AppTypeStyle.isSystemUpdateApp(packageInfo)) {
-                sortModel.setType(SortModel.Etype.APP_SYSTEM);
+                sortModel.setType(AppModel.Etype.APP_SYSTEM);
             } else {
-                sortModel.setType(SortModel.Etype.APP_USER);
+                sortModel.setType(AppModel.Etype.APP_USER);
             }
 
             // 汉字转换成拼音
@@ -297,7 +297,7 @@ public class NezhaListActivity extends Activity {
             // Log.d("sanbo", sortModel.toString());
             // mSortList.add(sortModel);
             // 非系统软件/非本身软件/非xposed即展示
-            if (SortModel.Etype.APP_SYSTEM != sortModel.getType() && !"com.xxx".equals(sortModel.getAppPackageName())
+            if (AppModel.Etype.APP_SYSTEM != sortModel.getType() && !"com.xxx".equals(sortModel.getAppPackageName())
                     && !"de.robv.android.xposed.installer".equals(sortModel.getAppPackageName())) {
                 mSortList.add(sortModel);
             }
@@ -328,13 +328,13 @@ public class NezhaListActivity extends Activity {
      * @param filterStr
      */
     private void filterData(String filterStr) {
-        List<SortModel> filterDateList = new ArrayList<SortModel>();
+        List<AppModel> filterDateList = new ArrayList<AppModel>();
 
         if (TextUtils.isEmpty(filterStr)) {
             filterDateList = appNameList;
         } else {
             filterDateList.clear();
-            for (SortModel sortModel : appNameList) {
+            for (AppModel sortModel : appNameList) {
                 String name = sortModel.getName();
                 if (name.indexOf(filterStr.toString()) != -1
                         || characterParser.getSelling(name).startsWith(filterStr.toString())) {

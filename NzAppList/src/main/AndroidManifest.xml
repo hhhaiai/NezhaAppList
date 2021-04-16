@@ -6,7 +6,7 @@
     <application
         >
         <activity
-            android:name=".ui.NezhaListActivity"
+            android:name=".ui.NzListActivity"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
     </application>
     <!--网络权限-->

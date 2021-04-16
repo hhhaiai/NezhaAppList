@@ -11,16 +11,16 @@ import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import me.hhhaiai.nzlist.R;
-import me.hhhaiai.nzlist.model.SortModel;
+import me.hhhaiai.nzlist.model.AppModel;
 
 import java.util.List;
 import java.util.Locale;
 
-public class NezhaAdapter extends BaseAdapter implements SectionIndexer {
-    private List<SortModel> list = null;
+public class NzAdapter extends BaseAdapter implements SectionIndexer {
+    private List<AppModel> list = null;
     private Context mContext;
 
-    public NezhaAdapter(Context mContext, List<SortModel> list) {
+    public NzAdapter(Context mContext, List<AppModel> list) {
         this.mContext = mContext;
         this.list = list;
     }
@@ -30,7 +30,7 @@ public class NezhaAdapter extends BaseAdapter implements SectionIndexer {
      *
      * @param list
      */
-    public void updateListView(List<SortModel> list) {
+    public void updateListView(List<AppModel> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -54,7 +54,7 @@ public class NezhaAdapter extends BaseAdapter implements SectionIndexer {
     @SuppressLint("InflateParams")
     public View getView(final int position, View view, ViewGroup arg2) {
         ViewHolder viewHolder = null;
-        final SortModel mContent = list.get(position);
+        final AppModel mContent = list.get(position);
         if (view == null) {
             viewHolder = new ViewHolder();
             view = LayoutInflater.from(mContext).inflate(R.layout.sortlist_item, null);

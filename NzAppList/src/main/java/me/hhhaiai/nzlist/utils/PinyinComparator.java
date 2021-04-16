@@ -1,13 +1,13 @@
 package me.hhhaiai.nzlist.utils;
 
-import me.hhhaiai.nzlist.model.SortModel;
+import me.hhhaiai.nzlist.model.AppModel;
 
 import java.util.Comparator;
 
-public class PinyinComparator implements Comparator<SortModel> {
+public class PinyinComparator implements Comparator<AppModel> {
 
     @Override
-    public int compare(SortModel o1, SortModel o2) {
+    public int compare(AppModel o1, AppModel o2) {
         if (o1.getSortLetters().equals("@") || o2.getSortLetters().equals("#")) {
             return -1;
         } else if (o1.getSortLetters().equals("#") || o2.getSortLetters().equals("@")) {
