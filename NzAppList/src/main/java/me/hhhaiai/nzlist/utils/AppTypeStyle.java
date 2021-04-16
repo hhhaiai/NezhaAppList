@@ -1,4 +1,4 @@
-package com.hhhaiai.nezhalist.utils;
+package me.hhhaiai.nzlist.utils;
 
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;

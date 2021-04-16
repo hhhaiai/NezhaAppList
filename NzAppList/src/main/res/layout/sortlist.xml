@@ -12,7 +12,7 @@
         android:focusable="true"
         android:focusableInTouchMode="true" />
 
-    <com.hhhaiai.nezhalist.utils.ui.ClearEditText
+    <me.hhhaiai.nzlist.utils.ui.ClearEditText
         android:id="@+id/filter_edit"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
             android:textSize="30.0dip"
             android:visibility="invisible" />
 
-        <com.hhhaiai.nezhalist.utils.ui.SideBar
+        <me.hhhaiai.nzlist.utils.ui.SideBar
             android:id="@+id/sidrbar"
             android:layout_width="30.0dip"
             android:layout_height="fill_parent"

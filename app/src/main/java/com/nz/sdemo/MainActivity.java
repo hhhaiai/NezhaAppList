@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.hhhaiai.nezhalist.ui.NezhaListActivity;
+import me.hhhaiai.nzlist.ui.NezhaListActivity;
 
 public class MainActivity extends Activity {
 

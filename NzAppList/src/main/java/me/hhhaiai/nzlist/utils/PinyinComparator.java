@@ -1,6 +1,6 @@
-package com.hhhaiai.nezhalist.utils;
+package me.hhhaiai.nzlist.utils;
 
-import com.hhhaiai.nezhalist.model.SortModel;
+import me.hhhaiai.nzlist.model.SortModel;
 
 import java.util.Comparator;
 

@@ -1,4 +1,4 @@
-package com.hhhaiai.nezhalist.utils.ui;
+package me.hhhaiai.nzlist.utils.ui;
 
 import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
@@ -17,7 +17,7 @@ import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.Checkable;
 
-import com.hhhaiai.nezhalist.R;
+import me.hhhaiai.nzlist.R;
 
 
 public class SmoothCheckBox extends View implements Checkable {

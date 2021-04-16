@@ -1,4 +1,4 @@
-package com.hhhaiai.nezhalist.utils;
+package me.hhhaiai.nzlist.utils;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -19,7 +19,6 @@ import java.util.Map;
  */
 public class UninstallApp {
 
-
     // 当收到安装、卸载、更新的广播时的data前缀
     private final String DATA_APK_STATUS_UPDATE = "package:";
     private Context mContext;
@@ -27,7 +26,7 @@ public class UninstallApp {
     private BroadcastReceiver mInstalledReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            L.d("intent: " + intent.toString());
+            NzAppLog.d("intent: " + intent.toString());
             String packageName = getPkgName(intent);
             // 单次卸载
             if (mUninstallMap.containsKey(packageName)) {
@@ -84,7 +83,7 @@ public class UninstallApp {
             intent.setData(Uri.parse("package:" + pkgName));
             mContext.startActivity(intent);
         } catch (Throwable e) {
-            L.e(e);
+            NzAppLog.e(e);
             if (callback != null) {
                 callback.notifyResult(false);
             }

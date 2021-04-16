@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.hhhaiai.nezhalist">
+    package="me.hhhaiai.nzlist">
 
     <application
         >
         <activity
-            android:name="com.hhhaiai.nezhalist.ui.NezhaListActivity"
+            android:name=".ui.NezhaListActivity"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"></activity>
     </application>
     <!--网络权限-->

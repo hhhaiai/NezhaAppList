@@ -1,4 +1,4 @@
-package com.hhhaiai.nezhalist.utils.ui;
+package me.hhhaiai.nzlist.utils.ui;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -14,7 +14,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import com.hhhaiai.nezhalist.R;
+import me.hhhaiai.nzlist.R;
 
 
 public class SideBar extends View {
@@ -117,7 +117,6 @@ public class SideBar extends View {
                             mTextDialog.setText(baseTexts[c]);
                             mTextDialog.setVisibility(View.VISIBLE);
                         }
-
                         choose = c;
                         invalidate();
                     }

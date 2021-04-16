@@ -1,4 +1,4 @@
-package com.hhhaiai.nezhalist.utils;
+package me.hhhaiai.nzlist.utils;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -57,7 +57,7 @@ import javax.xml.transform.stream.StreamSource;
  * @Create: 2019-04-30 11:28
  * @Author: sanbo
  */
-public class L {
+public class NzAppLog {
     
     // 解析属性最大层级
     public static final int MAX_CHILD_LEVEL = 3;
@@ -113,7 +113,7 @@ public class L {
             "Wranning....不够打印级别,请在命令行设置指令后重新尝试打印,命令行指令: adb shell setprop log.tag." + DEFAULT_TAG + " ";
     private static Character FORMATER = '%';
     
-    private L() {
+    private NzAppLog() {
     }
     
     /**
@@ -410,7 +410,7 @@ public class L {
             if (currentFile && !isKeeping) {
                 break;
             }
-            if (ste.getClassName().equals(L.class.getName())) {
+            if (ste.getClassName().equals(NzAppLog.class.getName())) {
                 if (!currentFile) {
                     currentFile = true;
                 }

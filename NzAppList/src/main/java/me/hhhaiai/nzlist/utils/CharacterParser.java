@@ -4,7 +4,7 @@
  * @author	LuRuihui
  * @version	0.1
  */
-package com.hhhaiai.nezhalist.utils;
+package me.hhhaiai.nzlist.utils;
 
 /**
  * Java汉字转换为拼音

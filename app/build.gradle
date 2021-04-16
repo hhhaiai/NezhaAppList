@@ -53,5 +53,5 @@ tasks.withType(Javadoc) {
     options.addStringOption('charSet', 'UTF-8')
 }
 dependencies {
-    implementation project(path: ':nzlist_libs')
+    implementation project(path: ':NzAppList')
 }

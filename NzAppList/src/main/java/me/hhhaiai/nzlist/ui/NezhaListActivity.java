@@ -1,4 +1,4 @@
-package com.hhhaiai.nezhalist.ui;
+package me.hhhaiai.nzlist.ui;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -28,21 +28,20 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-import com.hhhaiai.nezhalist.R;
-import com.hhhaiai.nezhalist.model.SortModel;
-import com.hhhaiai.nezhalist.utils.AppTypeStyle;
-import com.hhhaiai.nezhalist.utils.CharacterParser;
-import com.hhhaiai.nezhalist.utils.L;
-import com.hhhaiai.nezhalist.utils.PinyinComparator;
-import com.hhhaiai.nezhalist.utils.UninstallApp;
-import com.hhhaiai.nezhalist.utils.ui.ClearEditText;
-import com.hhhaiai.nezhalist.utils.ui.SideBar;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+
+import me.hhhaiai.nzlist.R;
+import me.hhhaiai.nzlist.model.SortModel;
+import me.hhhaiai.nzlist.utils.AppTypeStyle;
+import me.hhhaiai.nzlist.utils.CharacterParser;
+import me.hhhaiai.nzlist.utils.NzAppLog;
+import me.hhhaiai.nzlist.utils.PinyinComparator;
+import me.hhhaiai.nzlist.utils.UninstallApp;
+import me.hhhaiai.nzlist.utils.ui.ClearEditText;
+import me.hhhaiai.nzlist.utils.ui.SideBar;
 
 /**
  * @Copyright © 2016 sanbo Inc. All rights reserved.
@@ -174,7 +173,7 @@ public class NezhaListActivity extends Activity {
 
                                 switch (which) {
                                     case 0:// 启动应用
-                                        L.i("点击 启动应用 ");
+                                        NzAppLog.i("点击 启动应用 ");
 
                                         try {
                                             Intent intent = getPackageManager().getLaunchIntentForPackage(pkgName);
@@ -182,19 +181,19 @@ public class NezhaListActivity extends Activity {
                                             Toast.makeText(NezhaListActivity.this, "启动 [" + pkgName + "] 完毕!",
                                                     Toast.LENGTH_SHORT).show();
                                         } catch (Throwable e) {
-                                            L.e(e);
+                                            NzAppLog.e(e);
                                         }
 
                                         break;
                                     case 1:// 卸载应用
-                                        L.i("点击 卸载应用 ");
+                                        NzAppLog.i("点击 卸载应用 ");
                                         UninstallApp.getInstance(mContext).uninstall(pkgName, null);
                                         break;
                                     case 2:// XX模式运行
-                                        L.i("点击 XX模式运行 ");
+                                        NzAppLog.i("点击 XX模式运行 ");
                                         break;
                                     case 3:// 强制停止
-                                        L.i("点击 强制停止 ");
+                                        NzAppLog.i("点击 强制停止 ");
 //                                        Process.killProcess();
                                         try {
                                             ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
@@ -209,10 +208,10 @@ public class NezhaListActivity extends Activity {
                                         }
                                         break;
                                     case 4:// 清除数据
-                                        L.i("点击 清除数据 ");
+                                        NzAppLog.i("点击 清除数据 ");
                                         break;
                                     case 5:// 导出APP
-                                        L.i("点击 导出APP ");
+                                        NzAppLog.i("点击 导出APP ");
 
                                         break;
 

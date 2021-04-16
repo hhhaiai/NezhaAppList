@@ -1,4 +1,4 @@
-package com.hhhaiai.nezhalist.ui;
+package me.hhhaiai.nzlist.ui;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -10,8 +10,8 @@ import android.widget.BaseAdapter;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
-import com.hhhaiai.nezhalist.R;
-import com.hhhaiai.nezhalist.model.SortModel;
+import me.hhhaiai.nzlist.R;
+import me.hhhaiai.nzlist.model.SortModel;
 
 import java.util.List;
 import java.util.Locale;

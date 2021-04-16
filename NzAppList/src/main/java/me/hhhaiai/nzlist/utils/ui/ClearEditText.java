@@ -1,4 +1,4 @@
-package com.hhhaiai.nezhalist.utils.ui;
+package me.hhhaiai.nzlist.utils.ui;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -14,8 +14,7 @@ import android.view.animation.CycleInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
 
-import com.hhhaiai.nezhalist.R;
-
+import me.hhhaiai.nzlist.R;
 
 @SuppressLint("AppCompatCustomView")
 public class ClearEditText extends EditText implements OnFocusChangeListener, TextWatcher {

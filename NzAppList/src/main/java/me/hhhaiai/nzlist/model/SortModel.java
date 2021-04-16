@@ -1,4 +1,4 @@
-package com.hhhaiai.nezhalist.model;
+package me.hhhaiai.nzlist.model;
 
 import android.graphics.drawable.Drawable;
 
