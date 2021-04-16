@@ -17,7 +17,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dip"
-        android:background="@drawable/search_bar_edit_normal"
+        android:background="@drawable/search_bar"
         android:hint="请输入关键字"
         android:maxLines="1"
         android:textSize="15.0dip" />

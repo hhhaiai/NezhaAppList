@@ -52,7 +52,7 @@ public class NzSearchEditText extends EditText implements OnFocusChangeListener,
         // 获取EditText的DrawableRight,假如没有设置我们就使用默认的图片
         mClearDrawable = getCompoundDrawables()[2];
         if (mClearDrawable == null) {
-            mClearDrawable = getResources().getDrawable(R.drawable.emotionstore_progresscancelbtn);
+            mClearDrawable = getResources().getDrawable(R.drawable.emo);
         }
         mClearDrawable.setBounds(0, 0, mClearDrawable.getIntrinsicWidth(), mClearDrawable.getIntrinsicHeight());
         setClearIconVisible(false);
