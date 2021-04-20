@@ -5,15 +5,20 @@
     android:gravity="center_vertical"
     android:orientation="vertical">
 
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="#000000" />
+
     <TextView
         android:id="@+id/catalog"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="1.0"
         android:background="#E0E0E0"
-        android:paddingLeft="15dip"
-        android:paddingTop="6dip"
-        android:paddingBottom="6dip"
+        android:paddingLeft="10dip"
+        android:paddingTop="3dip"
+        android:paddingBottom="3dip"
         android:text="tatal"
         android:textColor="#454545"
         android:textSize="16dip"
@@ -23,7 +28,7 @@
         android:layout_width="fill_parent"
         android:layout_height="60.0dip"
         android:layout_marginLeft="5.0dip"
-        android:layout_marginTop="15.0dip">
+        android:layout_marginTop="6.0dip">
 
         <!-- 左侧的App图标 -->
 
@@ -44,19 +49,7 @@
             android:layout_toRightOf="@id/appIcon"
             android:gravity="center"
             android:singleLine="true"
-            android:text="请选择被调试的应用.."
-            android:textSize="14.0sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/appVersionCode"
-            android:layout_width="wrap_content"
-            android:layout_height="30.0dip"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="30.0dip"
-            android:gravity="center"
-            android:text="1.0"
-            android:textColor="#215B96"
+            android:text="应用名称"
             android:textSize="14.0sp"
             android:textStyle="bold" />
 
@@ -71,6 +64,20 @@
             android:singleLine="true"
             android:text="n/a"
             android:textSize="12.0sp" />
+
+        <TextView
+            android:id="@+id/appVersionCode"
+            android:layout_width="wrap_content"
+            android:layout_height="30.0dip"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15.0dip"
+            android:gravity="center"
+            android:text="n/a"
+            android:textColor="#215B96"
+            android:textSize="10.0sp"
+            android:textStyle="bold" />
+
+
     </RelativeLayout>
 
 </LinearLayout>

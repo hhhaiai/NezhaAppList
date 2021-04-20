@@ -5,22 +5,35 @@
     android:orientation="vertical">
 
     <!-- 不让EditText获取焦点. -->
-
     <LinearLayout
-        android:layout_width="0px"
-        android:layout_height="0px"
-        android:focusable="true"
-        android:focusableInTouchMode="true" />
-
-    <me.hhhaiai.nzlist.utils.ui.NzSearchEditText
-        android:id="@+id/filter_edit"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dip"
-        android:background="@drawable/search_bar"
-        android:hint="请输入关键字"
-        android:maxLines="1"
-        android:textSize="15.0dip" />
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="horizontal">
+
+        <me.hhhaiai.nzlist.utils.ui.NzSearchEditText
+            android:id="@+id/filter_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            android:layout_weight="1"
+            android:background="@drawable/search_bar"
+            android:hint="请输入关键字"
+            android:maxLines="1"
+            android:textSize="15.0dip" />
+
+        <ImageView
+            android:id="@+id/ivSetting"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:layout_marginStart="5dip"
+            android:layout_marginTop="5dip"
+            android:layout_marginEnd="5dip"
+            android:onClick="onClick"
+            android:src="@drawable/setting1" />
+
+    </LinearLayout>
 
     <FrameLayout
         android:id="@+id/frame"
@@ -39,8 +52,8 @@
             android:layout_width="40.0dip"
             android:layout_height="40.0dip"
             android:layout_gravity="center"
-            android:gravity="center"
             android:background="@drawable/textview_style"
+            android:gravity="center"
             android:textColor="#ffffffff"
             android:textSize="26.6dip"
             android:visibility="invisible" />

@@ -104,6 +104,13 @@ public class NzListActivity extends Activity {
         refInstallList();
     }
 
+    public void onClick(View view) {
+        if (R.id.ivSetting == view.getId()) {
+            Toast.makeText(this, "即将支持显示三方app或者所有app", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
     private void refInstallList() {
         this.proDialog = ProgressDialog.show(this, "Searching..", "searching..wait....", true, true);
         new Thread(new ShowappHandler()).start();
@@ -294,13 +301,15 @@ public class NzListActivity extends Activity {
             } else {
                 sortModel.setSortLetters("#");
             }
-            // Log.d("sanbo", sortModel.toString());
-            // mSortList.add(sortModel);
-            // 非系统软件/非本身软件/非xposed即展示
-            if (AppModel.Etype.APP_SYSTEM != sortModel.getType() && !"com.xxx".equals(sortModel.getAppPackageName())
-                    && !"de.robv.android.xposed.installer".equals(sortModel.getAppPackageName())) {
-                mSortList.add(sortModel);
-            }
+//            // Log.d("sanbo", sortModel.toString());
+//            // mSortList.add(sortModel);
+//            // 非系统软件/非本身软件/非xposed即展示
+//            if (AppModel.Etype.APP_SYSTEM != sortModel.getType() && !"com.xxx".equals(sortModel.getAppPackageName())
+//                    && !"de.robv.android.xposed.installer".equals(sortModel.getAppPackageName())) {
+//                mSortList.add(sortModel);
+//            }
+
+            mSortList.add(sortModel);
         }
         return mSortList;
 
