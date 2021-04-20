@@ -61,7 +61,7 @@ public class NzSideBar extends View {
      */
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        NzAppLog.i("onDraw");
+//        NzAppLog.i("onDraw");
         // 获取焦点改变背景颜色.
         // 获取对应高度
         int height = getHeight();
@@ -99,7 +99,7 @@ public class NzSideBar extends View {
     public boolean dispatchTouchEvent(MotionEvent event) {
         final int action = event.getAction();
 
-        NzAppLog.i("dispatchTouchEvent event:" + event.toString());
+//        NzAppLog.i("dispatchTouchEvent event:" + event.toString());
         final float y = event.getY();// 点击y坐标
         final int oldChoose = choose;
         final OnTouchingLetterChangedListener listener = onTouchingLetterChangedListener;

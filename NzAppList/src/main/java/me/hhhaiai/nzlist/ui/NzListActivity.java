@@ -34,6 +34,8 @@ import java.util.List;
 import java.util.Locale;
 
 import me.hhhaiai.nzlist.R;
+import me.hhhaiai.nzlist.interfaces.IProcesBase;
+import me.hhhaiai.nzlist.memory.ProcessHolder;
 import me.hhhaiai.nzlist.model.AppModel;
 import me.hhhaiai.nzlist.utils.AppTypeStyle;
 import me.hhhaiai.nzlist.utils.CharacterParser;
@@ -51,6 +53,7 @@ import me.hhhaiai.nzlist.utils.ui.NzSideBar;
  * @Author: sanbo
  */
 public class NzListActivity extends Activity {
+    public static final String KEY_DATA_PROCESS = "kdp";
 
     private Context mContext;
     private ListView sortListView;
@@ -99,10 +102,15 @@ public class NzListActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         mContext = this;
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.sortlist);
-        initSize();
-        refInstallList();
+        try {
+            setContentView(R.layout.sortlist);
+            initSize();
+            refInstallList();
+        } catch (Throwable e) {
+            NzAppLog.e(e);
+        }
     }
+
 
     public void onClick(View view) {
         if (R.id.ivSetting == view.getId()) {
@@ -165,78 +173,7 @@ public class NzListActivity extends Activity {
 
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-
-                final String[] items = new String[]{"启动应用", "卸载应用", "XX模式运行", "强制停止", "清除数据", "导出APP"};
-                Dialog alertDialog = new AlertDialog.Builder(NzListActivity.this).setTitle("操作列表")
-                        .setIcon(android.R.drawable.btn_star)
-                        .setItems(items, new DialogInterface.OnClickListener() {
-
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                AppModel model = (AppModel) adapter.getItem(position);
-                                PackageManager pm = null;
-                                Intent i = null;
-                                String pkgName = model.getAppPackageName();
-
-                                switch (which) {
-                                    case 0:// 启动应用
-                                        NzAppLog.i("点击 启动应用 ");
-
-                                        try {
-                                            Intent intent = getPackageManager().getLaunchIntentForPackage(pkgName);
-                                            startActivity(intent);
-                                            Toast.makeText(NzListActivity.this, "启动 [" + pkgName + "] 完毕!",
-                                                    Toast.LENGTH_SHORT).show();
-                                        } catch (Throwable e) {
-                                            NzAppLog.e(e);
-                                        }
-
-                                        break;
-                                    case 1:// 卸载应用
-                                        NzAppLog.i("点击 卸载应用 ");
-                                        UninstallApp.getInstance(mContext).uninstall(pkgName, null);
-                                        break;
-                                    case 2:// XX模式运行
-                                        NzAppLog.i("点击 XX模式运行 ");
-                                        break;
-                                    case 3:// 强制停止
-                                        NzAppLog.i("点击 强制停止 ");
-//                                        Process.killProcess();
-                                        try {
-                                            ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-
-                                            List<ActivityManager.RunningAppProcessInfo> infos = am.getRunningAppProcesses();
-                                            for (ActivityManager.RunningAppProcessInfo info : infos) {
-                                                if (info.processName.equals(pkgName)) {
-                                                    android.os.Process.killProcess(info.pid);
-                                                }
-                                            }
-                                        } catch (Throwable e) {
-                                        }
-                                        break;
-                                    case 4:// 清除数据
-                                        NzAppLog.i("点击 清除数据 ");
-                                        break;
-                                    case 5:// 导出APP
-                                        NzAppLog.i("点击 导出APP ");
-
-                                        break;
-
-                                    default:
-                                        break;
-                                }
-                            }
-
-                        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
-                        }).create();
-                alertDialog.show();
-                alertDialog.getWindow().setLayout(Width - (Width / 8), Heigt - (Heigt / 5));
-
-
+                processLongClick(position);
                 return true;
             }
         });
@@ -259,6 +196,47 @@ public class NzListActivity extends Activity {
             public void afterTextChanged(Editable s) {
             }
         });
+    }
+
+    /**
+     * 处理某些按钮长按操作
+     *
+     * @param position
+     */
+    private void processLongClick(int position) {
+
+        final String[] items = ProcessHolder.getInstance().getPorceserNames();
+        Dialog alertDialog = new AlertDialog.Builder(NzListActivity.this).setTitle("操作列表")
+                .setIcon(android.R.drawable.btn_star)
+                .setItems(items, new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        AppModel model = (AppModel) adapter.getItem(position);
+                        String pkgName = model.getAppPackageName();
+//                        NzAppLog.i("OnItemLongClickListener: " + pkgName + "------" + items.length + "----" + which);
+                        if (which < items.length) {
+                            String name = items[which];
+                            final IProcesBase pb = ProcessHolder.getInstance().getPorceserByName(name);
+//                            NzAppLog.i("pb: " + pb);
+
+                            if (pb != null) {
+                                new Thread(() -> {
+                                    pb.work();
+                                }).start();
+                            }
+                        }
+                    }
+                })
+//                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+//
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                    }
+//                })
+                .create();
+        alertDialog.show();
+        alertDialog.getWindow().setLayout(Width - (Width / 8), Heigt - (Heigt / 5));
     }
 
     /**
