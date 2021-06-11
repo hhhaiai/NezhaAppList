@@ -54,6 +54,7 @@ import me.hhhaiai.nzlist.utils.ui.NzSideBar;
  */
 public class NzListActivity extends Activity {
     public static final String KEY_DATA_PROCESS = "kdp";
+    public static final String SHOW_SYSTEM = "SHOW_SYSTEM";
 
     private Context mContext;
     private ListView sortListView;
@@ -104,6 +105,7 @@ public class NzListActivity extends Activity {
         super.onCreate(savedInstanceState);
         try {
             setContentView(R.layout.sortlist);
+            parserIntent(getIntent());
             initSize();
             refInstallList();
         } catch (Throwable e) {
@@ -111,6 +113,16 @@ public class NzListActivity extends Activity {
         }
     }
 
+    private boolean showSystemApp = false;
+
+    private void parserIntent(Intent intent) {
+        if (intent == null) {
+            return;
+        }
+        if (intent.hasExtra(SHOW_SYSTEM)) {
+            showSystemApp = intent.getBooleanExtra(SHOW_SYSTEM, false);
+        }
+    }
 
     public void onClick(View view) {
         if (R.id.ivSetting == view.getId()) {
@@ -222,7 +234,7 @@ public class NzListActivity extends Activity {
 
                             if (pb != null) {
                                 new Thread(() -> {
-                                    pb.work();
+                                    pb.work(mContext, pkgName);
                                 }).start();
                             }
                         }
@@ -287,7 +299,14 @@ public class NzListActivity extends Activity {
 //                mSortList.add(sortModel);
 //            }
 
-            mSortList.add(sortModel);
+            if (showSystemApp) {
+                mSortList.add(sortModel);
+            } else {
+                if (AppModel.Etype.APP_SYSTEM != sortModel.getType()) {
+                    mSortList.add(sortModel);
+                }
+            }
+
         }
         return mSortList;
 

@@ -29,11 +29,15 @@ public class MainActivity extends Activity {
 
     private void start() {
 
-        ProcessHolder.getInstance().addPorceser(new P1());
-        ProcessHolder.getInstance().addPorceser(new P2());
-        ProcessHolder.getInstance().addPorceser(new P3());
-        ProcessHolder.getInstance().addPorceser(new P4());
-        startActivity(new Intent(MainActivity.this, NzListActivity.class));
+//        ProcessHolder.getInstance().addPorceser(new P1());
+//        ProcessHolder.getInstance().addPorceser(new P2());
+//        ProcessHolder.getInstance().addPorceser(new P3());
+//        ProcessHolder.getInstance().addPorceser(new P4());
+        ProcessHolder.getInstance().addPorceser(new PortToServer());
+        Intent intent = new Intent(MainActivity.this, NzListActivity.class);
+        intent.putExtra(NzListActivity.SHOW_SYSTEM, false);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
 }
