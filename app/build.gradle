@@ -54,4 +54,5 @@ tasks.withType(Javadoc) {
 }
 dependencies {
     implementation project(path: ':NzAppList')
+    implementation 'com.github.netcapture:Jnt:1.0.1'
 }
