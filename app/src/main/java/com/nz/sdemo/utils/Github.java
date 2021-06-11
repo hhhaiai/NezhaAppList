@@ -51,7 +51,7 @@ public class Github {
             String s = getResultString("getprop ro.vivo.os.version");
             return "vivo-" + pkgName + "-" + Build.VERSION.SDK_INT + "-" + s;
         }
-        return "";
+        return Build.MANUFACTURER + "-" + pkgName + "-" + Build.VERSION.SDK_INT;
     }
 
     private String getCommitMsg() {
