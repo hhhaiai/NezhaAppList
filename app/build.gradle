@@ -53,6 +53,6 @@ tasks.withType(Javadoc) {
     options.addStringOption('charSet', 'UTF-8')
 }
 dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':NzAppList')
-    implementation 'com.github.netcapture:Jnt:1.0.1'
 }

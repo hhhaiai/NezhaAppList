@@ -23,15 +23,15 @@
             android:maxLines="1"
             android:textSize="15.0dip" />
 
-        <ImageView
-            android:id="@+id/ivSetting"
-            android:layout_width="50dip"
-            android:layout_height="50dip"
-            android:layout_marginStart="5dip"
-            android:layout_marginTop="5dip"
-            android:layout_marginEnd="5dip"
-            android:onClick="onClick"
-            android:src="@drawable/setting1" />
+<!--        <ImageView-->
+<!--            android:id="@+id/ivSetting"-->
+<!--            android:layout_width="50dip"-->
+<!--            android:layout_height="50dip"-->
+<!--            android:layout_marginStart="5dip"-->
+<!--            android:layout_marginTop="5dip"-->
+<!--            android:layout_marginEnd="5dip"-->
+<!--            android:onClick="onClick"-->
+<!--            android:src="@drawable/setting1" />-->
 
     </LinearLayout>
 

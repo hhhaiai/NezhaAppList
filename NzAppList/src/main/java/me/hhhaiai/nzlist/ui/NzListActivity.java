@@ -125,9 +125,9 @@ public class NzListActivity extends Activity {
     }
 
     public void onClick(View view) {
-        if (R.id.ivSetting == view.getId()) {
-            Toast.makeText(this, "即将支持显示三方app或者所有app", Toast.LENGTH_SHORT).show();
-        }
+//        if (R.id.ivSetting == view.getId()) {
+//            Toast.makeText(this, "即将支持显示三方app或者所有app", Toast.LENGTH_SHORT).show();
+//        }
 
     }
 
