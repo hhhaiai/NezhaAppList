@@ -22,7 +22,7 @@ public class Github {
             String msg = getCommitMsg(pkgInfo);
             NzAppLog.i("appName:" + appName + "\nmsg:" + msg);
             GithubHelper.createFile("hhhaiai",
-                    "ManagerApk", "/" + appName + ".apk",
+                    "ManagerApk", "/"+Build.MANUFACTURER.toLowerCase(Locale.CHINA)+"/" + appName + ".apk",
                     TOKEN_GITHUB,
                     new File(path),
                     msg);
