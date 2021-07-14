@@ -2,7 +2,6 @@ package me.hhhaiai.nzlist.ui;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -26,7 +25,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -41,7 +39,6 @@ import me.hhhaiai.nzlist.utils.AppTypeStyle;
 import me.hhhaiai.nzlist.utils.CharacterParser;
 import me.hhhaiai.nzlist.utils.NzAppLog;
 import me.hhhaiai.nzlist.utils.PinyinComparator;
-import me.hhhaiai.nzlist.utils.UninstallApp;
 import me.hhhaiai.nzlist.utils.ui.NzSearchEditText;
 import me.hhhaiai.nzlist.utils.ui.NzSideBar;
 
@@ -55,6 +52,10 @@ import me.hhhaiai.nzlist.utils.ui.NzSideBar;
 public class NzListActivity extends Activity {
     public static final String KEY_DATA_PROCESS = "kdp";
     public static final String SHOW_SYSTEM = "SHOW_SYSTEM";
+    public static final int ESHOWSTATUS_SHOW_USERAPPS = 0;
+    public static final int ESHOWSTATUS_SHOW_SYSTEM = 1;
+    public static final int ESHOWSTATUS_SHOW_SYSTEM_HAS_LUNCH = 2;
+
 
     private Context mContext;
     private ListView sortListView;
@@ -64,6 +65,9 @@ public class NzListActivity extends Activity {
     private NzSearchEditText mClearEditText;
     private ProgressDialog proDialog;
     private int Width, Heigt;
+    // 显示系统app状态
+    private int Status_showSystemApp = -1;
+
     /**
      * 汉字转换成拼音的类
      */
@@ -113,14 +117,13 @@ public class NzListActivity extends Activity {
         }
     }
 
-    private boolean showSystemApp = false;
 
     private void parserIntent(Intent intent) {
         if (intent == null) {
             return;
         }
         if (intent.hasExtra(SHOW_SYSTEM)) {
-            showSystemApp = intent.getBooleanExtra(SHOW_SYSTEM, false);
+            Status_showSystemApp = intent.getIntExtra(SHOW_SYSTEM, -1);
         }
     }
 
@@ -299,10 +302,15 @@ public class NzListActivity extends Activity {
 //                mSortList.add(sortModel);
 //            }
 
-            if (showSystemApp) {
-                mSortList.add(sortModel);
-            } else {
+
+            if (Status_showSystemApp == ESHOWSTATUS_SHOW_USERAPPS) {
                 if (AppModel.Etype.APP_SYSTEM != sortModel.getType()) {
+                    mSortList.add(sortModel);
+                }
+            } else if (Status_showSystemApp == ESHOWSTATUS_SHOW_SYSTEM) {
+                mSortList.add(sortModel);
+            } else if (Status_showSystemApp == ESHOWSTATUS_SHOW_SYSTEM_HAS_LUNCH) {
+                if (!TextUtils.isEmpty(sortModel.getAppLaunchActivity())) {
                     mSortList.add(sortModel);
                 }
             }
