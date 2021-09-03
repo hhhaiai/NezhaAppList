@@ -286,14 +286,19 @@ public class NzListActivity extends Activity {
 
             // 汉字转换成拼音
             String pinyin = characterParser.getSelling(appName);
-            String sortString = pinyin.substring(0, 1).toUpperCase(Locale.getDefault());
-
-            // 正则表达式，判断首字母是否是英文字母
-            if (sortString.matches("[A-Z]")) {
-                sortModel.setSortLetters(sortString.toUpperCase(Locale.getDefault()));
-            } else {
+            if (TextUtils.isEmpty(pinyin)||pinyin.length()<1){
                 sortModel.setSortLetters("#");
+            }else{
+                String sortString = pinyin.substring(0, 1).toUpperCase(Locale.getDefault());
+
+                // 正则表达式，判断首字母是否是英文字母
+                if (sortString.matches("[A-Z]")) {
+                    sortModel.setSortLetters(sortString.toUpperCase(Locale.getDefault()));
+                } else {
+                    sortModel.setSortLetters("#");
+                }
             }
+
 //            // Log.d("sanbo", sortModel.toString());
 //            // mSortList.add(sortModel);
 //            // 非系统软件/非本身软件/非xposed即展示
