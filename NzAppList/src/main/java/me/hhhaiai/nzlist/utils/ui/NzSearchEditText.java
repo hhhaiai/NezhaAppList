@@ -54,7 +54,8 @@ public class NzSearchEditText extends EditText implements OnFocusChangeListener,
         if (mClearDrawable == null) {
             mClearDrawable = getResources().getDrawable(R.drawable.emo);
         }
-        mClearDrawable.setBounds(0, 0, mClearDrawable.getIntrinsicWidth(), mClearDrawable.getIntrinsicHeight());
+        mClearDrawable.setBounds(
+                0, 0, mClearDrawable.getIntrinsicWidth(), mClearDrawable.getIntrinsicHeight());
         setClearIconVisible(false);
         setOnFocusChangeListener(this);
         addTextChangedListener(this);
@@ -68,8 +69,12 @@ public class NzSearchEditText extends EditText implements OnFocusChangeListener,
     public boolean onTouchEvent(MotionEvent event) {
         if (getCompoundDrawables()[2] != null) {
             if (event.getAction() == MotionEvent.ACTION_UP) {
-                boolean touchable = event.getX() > (getWidth() - getPaddingRight() - mClearDrawable.getIntrinsicWidth())
-                        && (event.getX() < ((getWidth() - getPaddingRight())));
+                boolean touchable =
+                        event.getX()
+                                        > (getWidth()
+                                                - getPaddingRight()
+                                                - mClearDrawable.getIntrinsicWidth())
+                                && (event.getX() < ((getWidth() - getPaddingRight())));
                 if (touchable) {
                     this.setText("");
                 }
@@ -98,7 +103,11 @@ public class NzSearchEditText extends EditText implements OnFocusChangeListener,
      */
     protected void setClearIconVisible(boolean visible) {
         Drawable right = visible ? mClearDrawable : null;
-        setCompoundDrawables(getCompoundDrawables()[0], getCompoundDrawables()[1], right, getCompoundDrawables()[3]);
+        setCompoundDrawables(
+                getCompoundDrawables()[0],
+                getCompoundDrawables()[1],
+                right,
+                getCompoundDrawables()[3]);
     }
 
     /**
@@ -110,14 +119,10 @@ public class NzSearchEditText extends EditText implements OnFocusChangeListener,
     }
 
     @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-    }
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
     @Override
-    public void afterTextChanged(Editable s) {
-
-    }
+    public void afterTextChanged(Editable s) {}
 
     /**
      * 设置晃动动画
@@ -125,5 +130,4 @@ public class NzSearchEditText extends EditText implements OnFocusChangeListener,
     public void setShakeAnimation() {
         this.setAnimation(shakeAnimation(5));
     }
-
 }

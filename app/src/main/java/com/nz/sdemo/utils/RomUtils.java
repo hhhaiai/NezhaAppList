@@ -3,6 +3,8 @@ package com.nz.sdemo.utils;
 import android.os.Build;
 import android.text.TextUtils;
 
+import me.hhhaiai.nzlist.utils.NzAppLog;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.Closeable;
@@ -15,8 +17,6 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-
-import me.hhhaiai.nzlist.utils.NzAppLog;
 
 public class RomUtils {
 
@@ -93,24 +93,24 @@ public class RomUtils {
         return "";
     }
 
-
     public static boolean isRightRom(String[] strArr) {
         if (strArr != null && strArr.length > 0) {
             for (int i = 0; i < strArr.length; i++) {
                 String v = strArr[i];
-                return Build.BOARD.toLowerCase(Locale.CHINA).contains(v) || Build.BRAND.toLowerCase(Locale.CHINA).contains(v) || Build.MANUFACTURER.toLowerCase(Locale.CHINA).contains(v);
+                return Build.BOARD.toLowerCase(Locale.CHINA).contains(v)
+                        || Build.BRAND.toLowerCase(Locale.CHINA).contains(v)
+                        || Build.MANUFACTURER.toLowerCase(Locale.CHINA).contains(v);
             }
             List ss = Arrays.asList(strArr);
-
         }
 
         return false;
     }
 
-
     public static String getRomVersion(String str) {
         String systemProperty = !TextUtils.isEmpty(str) ? getProp(str) : "";
-        if (TextUtils.isEmpty(systemProperty) || systemProperty.toLowerCase(Locale.CHINA).equals("unknown")) {
+        if (TextUtils.isEmpty(systemProperty)
+                || systemProperty.toLowerCase(Locale.CHINA).equals("unknown")) {
             try {
                 systemProperty = getResultString("getprop " + str);
             } catch (Throwable unused) {
@@ -126,16 +126,25 @@ public class RomUtils {
         try {
             if (Build.VERSION.SDK_INT < 26) {
                 try {
-                    Method declaredMethod = Class.forName("android.os.SystemProperties").getDeclaredMethod("get", String.class, String.class);
+                    Method declaredMethod =
+                            Class.forName("android.os.SystemProperties")
+                                    .getDeclaredMethod("get", String.class, String.class);
                     declaredMethod.setAccessible(true);
                     return (String) declaredMethod.invoke(null, str, "");
                 } catch (Exception unused) {
                     return "";
                 }
             } else {
-                Method declaredMethod2 = Class.class.getDeclaredMethod("getDeclaredMethod", String.class, Class[].class);
+                Method declaredMethod2 =
+                        Class.class.getDeclaredMethod(
+                                "getDeclaredMethod", String.class, Class[].class);
                 declaredMethod2.setAccessible(true);
-                Method method = (Method) declaredMethod2.invoke(Class.forName("android.os.SystemProperties"), "get", new Class[]{String.class, String.class});
+                Method method =
+                        (Method)
+                                declaredMethod2.invoke(
+                                        Class.forName("android.os.SystemProperties"),
+                                        "get",
+                                        new Class[] {String.class, String.class});
                 method.setAccessible(true);
                 return (String) method.invoke(null, str, "");
             }
@@ -164,7 +173,7 @@ public class RomUtils {
             os.write(cmd.getBytes());
             os.writeBytes("\n");
             os.flush();
-            //exitValue
+            // exitValue
             os.writeBytes("exit\n");
             os.flush();
             ii = proc.getInputStream();

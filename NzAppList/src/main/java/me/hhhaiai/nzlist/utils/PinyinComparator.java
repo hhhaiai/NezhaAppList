@@ -16,5 +16,4 @@ public class PinyinComparator implements Comparator<AppModel> {
             return o1.getSortLetters().compareTo(o2.getSortLetters());
         }
     }
-
 }

@@ -19,7 +19,6 @@ import android.widget.Checkable;
 
 import me.hhhaiai.nzlist.R;
 
-
 public class NzCheckBox extends View implements Checkable {
     private static final String KEY_INSTANCE_STATE = "InstanceState";
 
@@ -35,7 +34,6 @@ public class NzCheckBox extends View implements Checkable {
     private Point[] mTickPoints;
     private Point mCenterPoint;
     private Path mTickPath;
-
 
     private float mLeftLineDistance, mRightLineDistance, mDrewDistance;
     private float mScaleVal = 1.0f, mFloorScale = 1.0f;
@@ -89,10 +87,14 @@ public class NzCheckBox extends View implements Checkable {
         TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.SmoothCheckBox);
         int tickColor = ta.getColor(R.styleable.SmoothCheckBox_color_tick, COLOR_TICK);
         mAnimDuration = ta.getInt(R.styleable.SmoothCheckBox_duration, DEF_ANIM_DURATION);
-        mFloorColor = ta.getColor(R.styleable.SmoothCheckBox_color_unchecked_stroke, COLOR_FLOOR_UNCHECKED);
+        mFloorColor =
+                ta.getColor(
+                        R.styleable.SmoothCheckBox_color_unchecked_stroke, COLOR_FLOOR_UNCHECKED);
         mCheckedColor = ta.getColor(R.styleable.SmoothCheckBox_color_checked, COLOR_CHECKED);
         mUnCheckedColor = ta.getColor(R.styleable.SmoothCheckBox_color_unchecked, COLOR_UNCHECKED);
-        mStrokeWidth = ta.getDimensionPixelSize(R.styleable.SmoothCheckBox_stroke_width, dp2px(getContext(), 0));
+        mStrokeWidth =
+                ta.getDimensionPixelSize(
+                        R.styleable.SmoothCheckBox_stroke_width, dp2px(getContext(), 0));
         ta.recycle();
 
         mFloorUnCheckedColor = mFloorColor;
@@ -116,22 +118,23 @@ public class NzCheckBox extends View implements Checkable {
         mTickPoints[1] = new Point();
         mTickPoints[2] = new Point();
 
-        setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!Enabled) {
-                    return;
-                }
-                toggle();
-                mTickDrawing = false;
-                mDrewDistance = 0;
-                if (isChecked()) {
-                    startCheckedAnimation();
-                } else {
-                    startUnCheckedAnimation();
-                }
-            }
-        });
+        setOnClickListener(
+                new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (!Enabled) {
+                            return;
+                        }
+                        toggle();
+                        mTickDrawing = false;
+                        mDrewDistance = 0;
+                        if (isChecked()) {
+                            startCheckedAnimation();
+                        } else {
+                            startUnCheckedAnimation();
+                        }
+                    }
+                });
     }
 
     public void setEnabled(Boolean Enabled) {
@@ -239,7 +242,8 @@ public class NzCheckBox extends View implements Checkable {
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         mWidth = getMeasuredWidth();
         mStrokeWidth = (mStrokeWidth == 0 ? getMeasuredWidth() / 10 : mStrokeWidth);
-        mStrokeWidth = mStrokeWidth > getMeasuredWidth() / 5 ? getMeasuredWidth() / 5 : mStrokeWidth;
+        mStrokeWidth =
+                mStrokeWidth > getMeasuredWidth() / 5 ? getMeasuredWidth() / 5 : mStrokeWidth;
         mStrokeWidth = (mStrokeWidth < 3) ? 3 : mStrokeWidth;
         mCenterPoint.x = mWidth / 2;
         mCenterPoint.y = getMeasuredHeight() / 2;
@@ -251,10 +255,16 @@ public class NzCheckBox extends View implements Checkable {
         mTickPoints[2].x = Math.round((float) getMeasuredWidth() / 30 * 22);
         mTickPoints[2].y = Math.round((float) getMeasuredHeight() / 30 * 10);
 
-        mLeftLineDistance = (float) Math.sqrt(Math.pow(mTickPoints[1].x - mTickPoints[0].x, 2) +
-                Math.pow(mTickPoints[1].y - mTickPoints[0].y, 2));
-        mRightLineDistance = (float) Math.sqrt(Math.pow(mTickPoints[2].x - mTickPoints[1].x, 2) +
-                Math.pow(mTickPoints[2].y - mTickPoints[1].y, 2));
+        mLeftLineDistance =
+                (float)
+                        Math.sqrt(
+                                Math.pow(mTickPoints[1].x - mTickPoints[0].x, 2)
+                                        + Math.pow(mTickPoints[1].y - mTickPoints[0].y, 2));
+        mRightLineDistance =
+                (float)
+                        Math.sqrt(
+                                Math.pow(mTickPoints[2].x - mTickPoints[1].x, 2)
+                                        + Math.pow(mTickPoints[2].y - mTickPoints[1].y, 2));
         mTickPaint.setStrokeWidth(mStrokeWidth);
     }
 
@@ -289,8 +299,16 @@ public class NzCheckBox extends View implements Checkable {
         if (mDrewDistance < mLeftLineDistance) {
             float step = (mWidth / 20.0f) < 3 ? 3 : (mWidth / 20.0f);
             mDrewDistance += step;
-            float stopX = mTickPoints[0].x + (mTickPoints[1].x - mTickPoints[0].x) * mDrewDistance / mLeftLineDistance;
-            float stopY = mTickPoints[0].y + (mTickPoints[1].y - mTickPoints[0].y) * mDrewDistance / mLeftLineDistance;
+            float stopX =
+                    mTickPoints[0].x
+                            + (mTickPoints[1].x - mTickPoints[0].x)
+                                    * mDrewDistance
+                                    / mLeftLineDistance;
+            float stopY =
+                    mTickPoints[0].y
+                            + (mTickPoints[1].y - mTickPoints[0].y)
+                                    * mDrewDistance
+                                    / mLeftLineDistance;
 
             mTickPath.moveTo(mTickPoints[0].x, mTickPoints[0].y);
             mTickPath.lineTo(stopX, stopY);
@@ -307,8 +325,16 @@ public class NzCheckBox extends View implements Checkable {
 
             // draw right of the tick
             if (mDrewDistance < mLeftLineDistance + mRightLineDistance) {
-                float stopX = mTickPoints[1].x + (mTickPoints[2].x - mTickPoints[1].x) * (mDrewDistance - mLeftLineDistance) / mRightLineDistance;
-                float stopY = mTickPoints[1].y - (mTickPoints[1].y - mTickPoints[2].y) * (mDrewDistance - mLeftLineDistance) / mRightLineDistance;
+                float stopX =
+                        mTickPoints[1].x
+                                + (mTickPoints[2].x - mTickPoints[1].x)
+                                        * (mDrewDistance - mLeftLineDistance)
+                                        / mRightLineDistance;
+                float stopY =
+                        mTickPoints[1].y
+                                - (mTickPoints[1].y - mTickPoints[2].y)
+                                        * (mDrewDistance - mLeftLineDistance)
+                                        / mRightLineDistance;
 
                 mTickPath.reset();
                 mTickPath.moveTo(mTickPoints[1].x, mTickPoints[1].y);
@@ -327,12 +353,14 @@ public class NzCheckBox extends View implements Checkable {
 
         // invalidate
         if (mDrewDistance < mLeftLineDistance + mRightLineDistance) {
-            postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    postInvalidate();
-                }
-            }, 10);
+            postDelayed(
+                    new Runnable() {
+                        @Override
+                        public void run() {
+                            postInvalidate();
+                        }
+                    },
+                    10);
         }
     }
 
@@ -340,26 +368,29 @@ public class NzCheckBox extends View implements Checkable {
         ValueAnimator animator = ValueAnimator.ofFloat(1.0f, 0f);
         animator.setDuration(mAnimDuration / 3 * 2);
         animator.setInterpolator(new LinearInterpolator());
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                mScaleVal = (float) animation.getAnimatedValue();
-                mFloorColor = getGradientColor(mUnCheckedColor, mCheckedColor, 1 - mScaleVal);
-                postInvalidate();
-            }
-        });
+        animator.addUpdateListener(
+                new ValueAnimator.AnimatorUpdateListener() {
+                    @Override
+                    public void onAnimationUpdate(ValueAnimator animation) {
+                        mScaleVal = (float) animation.getAnimatedValue();
+                        mFloorColor =
+                                getGradientColor(mUnCheckedColor, mCheckedColor, 1 - mScaleVal);
+                        postInvalidate();
+                    }
+                });
         animator.start();
 
         ValueAnimator floorAnimator = ValueAnimator.ofFloat(1.0f, 0.8f, 1.0f);
         floorAnimator.setDuration(mAnimDuration);
         floorAnimator.setInterpolator(new LinearInterpolator());
-        floorAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                mFloorScale = (float) animation.getAnimatedValue();
-                postInvalidate();
-            }
-        });
+        floorAnimator.addUpdateListener(
+                new ValueAnimator.AnimatorUpdateListener() {
+                    @Override
+                    public void onAnimationUpdate(ValueAnimator animation) {
+                        mFloorScale = (float) animation.getAnimatedValue();
+                        postInvalidate();
+                    }
+                });
         floorAnimator.start();
 
         drawTickDelayed();
@@ -369,37 +400,42 @@ public class NzCheckBox extends View implements Checkable {
         ValueAnimator animator = ValueAnimator.ofFloat(0f, 1.0f);
         animator.setDuration(mAnimDuration);
         animator.setInterpolator(new LinearInterpolator());
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                mScaleVal = (float) animation.getAnimatedValue();
-                mFloorColor = getGradientColor(mCheckedColor, mFloorUnCheckedColor, mScaleVal);
-                postInvalidate();
-            }
-        });
+        animator.addUpdateListener(
+                new ValueAnimator.AnimatorUpdateListener() {
+                    @Override
+                    public void onAnimationUpdate(ValueAnimator animation) {
+                        mScaleVal = (float) animation.getAnimatedValue();
+                        mFloorColor =
+                                getGradientColor(mCheckedColor, mFloorUnCheckedColor, mScaleVal);
+                        postInvalidate();
+                    }
+                });
         animator.start();
 
         ValueAnimator floorAnimator = ValueAnimator.ofFloat(1.0f, 0.8f, 1.0f);
         floorAnimator.setDuration(mAnimDuration);
         floorAnimator.setInterpolator(new LinearInterpolator());
-        floorAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                mFloorScale = (float) animation.getAnimatedValue();
-                postInvalidate();
-            }
-        });
+        floorAnimator.addUpdateListener(
+                new ValueAnimator.AnimatorUpdateListener() {
+                    @Override
+                    public void onAnimationUpdate(ValueAnimator animation) {
+                        mFloorScale = (float) animation.getAnimatedValue();
+                        postInvalidate();
+                    }
+                });
         floorAnimator.start();
     }
 
     private void drawTickDelayed() {
-        postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mTickDrawing = true;
-                postInvalidate();
-            }
-        }, mAnimDuration);
+        postDelayed(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        mTickDrawing = true;
+                        postInvalidate();
+                    }
+                },
+                mAnimDuration);
     }
 
     private int dp2px(Context context, float dipValue) {

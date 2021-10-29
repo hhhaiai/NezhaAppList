@@ -23,26 +23,26 @@ public class UninstallApp {
     private final String DATA_APK_STATUS_UPDATE = "package:";
     private Context mContext;
     private Map<String, UninstallCallback> mUninstallMap = new HashMap<>(16);
-    private BroadcastReceiver mInstalledReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            NzAppLog.d("intent: " + intent.toString());
-            String packageName = getPkgName(intent);
-            // 单次卸载
-            if (mUninstallMap.containsKey(packageName)) {
-                UninstallCallback callback = mUninstallMap.get(packageName);
-                if (callback != null) {
-                    callback.notifyResult(true);
+    private BroadcastReceiver mInstalledReceiver =
+            new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    NzAppLog.d("intent: " + intent.toString());
+                    String packageName = getPkgName(intent);
+                    // 单次卸载
+                    if (mUninstallMap.containsKey(packageName)) {
+                        UninstallCallback callback = mUninstallMap.get(packageName);
+                        if (callback != null) {
+                            callback.notifyResult(true);
+                        }
+                    }
+                    // 不存在同时卸载多个
+                    // 此处应该清map
+                    //            mUninstallMap.clear();
                 }
-            }
-            //不存在同时卸载多个
-            //此处应该清map
-//            mUninstallMap.clear();
-        }
-    };
+            };
 
-    private UninstallApp() {
-    }
+    private UninstallApp() {}
 
     public static UninstallApp getInstance(Context context) {
         HOLDER.INSTANCE.initContext(context);
@@ -66,7 +66,6 @@ public class UninstallApp {
         filter.addDataScheme("package");
         mContext.registerReceiver(mInstalledReceiver, filter);
     }
-
 
     public void uninstall(String pkgName, UninstallCallback callback) {
         if (TextUtils.isEmpty(pkgName)) {

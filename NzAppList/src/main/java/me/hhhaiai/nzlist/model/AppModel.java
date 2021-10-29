@@ -13,24 +13,31 @@ import java.io.Serializable;
  */
 public class AppModel implements Serializable {
     private String mAppName; // app名字
-    private String mAppVersionName;// app版本
+    private String mAppVersionName; // app版本
     private String mAppPackageName; // app包名
-    private String mAppLaunchActivity;// 启动app名字
-    private String mDataSize;// app数据大小
-    private String mCacheSize;// app缓存大小
-    private String mAppSize;// app大小
-    private String mTotalSize;// app使用空间总大小
+    private String mAppLaunchActivity; // 启动app名字
+    private String mDataSize; // app数据大小
+    private String mCacheSize; // app缓存大小
+    private String mAppSize; // app大小
+    private String mTotalSize; // app使用空间总大小
     private Drawable mIcon; // app图标
     private String mSortLetters; // 显示数据拼音的首字母
     private Etype mType = Etype.APP_UNKNOW; // app 类型,系统安装还是用户安装
 
-    private String mInternalName;// 内部名字
+    private String mInternalName; // 内部名字
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("[").append(mAppName).append("]").append("--").append(mAppPackageName).append("--")
-                .append(mAppVersionName).append("===type==").append(mType);
+        sb.append("[")
+                .append(mAppName)
+                .append("]")
+                .append("--")
+                .append(mAppPackageName)
+                .append("--")
+                .append(mAppVersionName)
+                .append("===type==")
+                .append(mType);
         return sb.toString();
     }
 
@@ -138,7 +145,6 @@ public class AppModel implements Serializable {
         this.mAppVersionName = appVersionName;
     }
 
-
     /**
      * @Copyright © 2016 sanbo Inc. All rights reserved.
      * @Description: 应用类型，是系统自带还是用户安装，还是系统软件更新
@@ -147,7 +153,8 @@ public class AppModel implements Serializable {
      * @Author: sanbo
      */
     public enum Etype {
-        APP_UNKNOW, APP_SYSTEM/* , APP_SYSTEM_UPDATE */, APP_USER
+        APP_UNKNOW,
+        APP_SYSTEM /* , APP_SYSTEM_UPDATE */,
+        APP_USER
     }
-
 }

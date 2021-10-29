@@ -87,7 +87,6 @@ public class NzAdapter extends BaseAdapter implements SectionIndexer {
         }
 
         return view;
-
     }
 
     /**
@@ -136,11 +135,11 @@ public class NzAdapter extends BaseAdapter implements SectionIndexer {
         return null;
     }
 
-    final static class ViewHolder {
-        TextView tvLetter;// app名字字母
-        TextView appName;// app名字
-        TextView appPackage;// app包名
-        TextView appVersionCode;// app版本号
-        TextView appIcon;// app icon
+    static final class ViewHolder {
+        TextView tvLetter; // app名字字母
+        TextView appName; // app名字
+        TextView appPackage; // app包名
+        TextView appVersionCode; // app版本号
+        TextView appIcon; // app icon
     }
 }

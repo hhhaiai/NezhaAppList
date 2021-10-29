@@ -14,18 +14,17 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import me.hhhaiai.nzlist.R;
-import me.hhhaiai.nzlist.utils.NzAppLog;
-
-
 public class NzSideBar extends View {
     // 26个字母
-    public static String[] baseTexts = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P",
-            "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "#"};
+    public static String[] baseTexts = {
+        "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R",
+        "S", "T", "U", "V", "W", "X", "Y", "Z", "#"
+    };
     /**
      * small -->large之间的判断依据
      */
     private static int SMALLINCH = 3;
+
     private static double SMALLINCHES = 3.4;
     private static double NORMALINCH = 4.2;
     private static double NORMALINCHES = 4.7;
@@ -33,7 +32,7 @@ public class NzSideBar extends View {
     private WindowManager winmManager;
     // 触摸事件
     private OnTouchingLetterChangedListener onTouchingLetterChangedListener;
-    private int choose = -1;// 选中
+    private int choose = -1; // 选中
     private Paint paint = new Paint();
     private int textSize = 0;
     private TextView mTextDialog;
@@ -61,7 +60,7 @@ public class NzSideBar extends View {
      */
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-//        NzAppLog.i("onDraw");
+        //        NzAppLog.i("onDraw");
         // 获取焦点改变背景颜色.
         // 获取对应高度
         int height = getHeight();
@@ -80,7 +79,7 @@ public class NzSideBar extends View {
             paint.setTextSize(textSize);
             // 选中的状态
             if (i == choose) {
-//                paint.setColor(Color.parseColor("#3399ff"));
+                //                paint.setColor(Color.parseColor("#3399ff"));
                 paint.setColor(Color.parseColor("#FDFEFE"));
                 paint.setFakeBoldText(true);
             }
@@ -91,7 +90,6 @@ public class NzSideBar extends View {
             // 重置画笔
             paint.reset();
         }
-
     }
 
     @SuppressWarnings("deprecation")
@@ -99,8 +97,8 @@ public class NzSideBar extends View {
     public boolean dispatchTouchEvent(MotionEvent event) {
         final int action = event.getAction();
 
-//        NzAppLog.i("dispatchTouchEvent event:" + event.toString());
-        final float y = event.getY();// 点击y坐标
+        //        NzAppLog.i("dispatchTouchEvent event:" + event.toString());
+        final float y = event.getY(); // 点击y坐标
         final int oldChoose = choose;
         final OnTouchingLetterChangedListener listener = onTouchingLetterChangedListener;
         // 点击y坐标所占总高度的比例*b数组的长度就等于点击b中的个数.
@@ -117,7 +115,7 @@ public class NzSideBar extends View {
                 break;
 
             default:
-//                setBackgroundResource(R.drawable.sidebar_background);
+                //                setBackgroundResource(R.drawable.sidebar_background);
                 setBackgroundColor(Color.parseColor("#8C3498DB"));
                 if (oldChoose != c) {
                     if (c >= 0 && c < baseTexts.length) {
@@ -143,7 +141,8 @@ public class NzSideBar extends View {
      *
      * @param onTouchingLetterChangedListener
      */
-    public void setOnTouchingLetterChangedListener(OnTouchingLetterChangedListener onTouchingLetterChangedListener) {
+    public void setOnTouchingLetterChangedListener(
+            OnTouchingLetterChangedListener onTouchingLetterChangedListener) {
         this.onTouchingLetterChangedListener = onTouchingLetterChangedListener;
     }
 
@@ -153,7 +152,7 @@ public class NzSideBar extends View {
      */
     private int getScreenSizeOfDevice() {
         Point point = new Point();
-//        winmManager.getDefaultDisplay().getRealSize(point);
+        //        winmManager.getDefaultDisplay().getRealSize(point);
         winmManager.getDefaultDisplay().getSize(point);
         DisplayMetrics dm = getResources().getDisplayMetrics();
         double x = Math.pow(point.x / dm.xdpi, 2);
@@ -170,7 +169,6 @@ public class NzSideBar extends View {
         }
         if (screenInches > LARGEINCH) {
             return 35;
-
         }
         return 15;
     }
@@ -180,10 +178,7 @@ public class NzSideBar extends View {
      *
      * @author coder
      */
-
     public interface OnTouchingLetterChangedListener {
         void onTouchingLetterChanged(String s);
     }
-
-
 }

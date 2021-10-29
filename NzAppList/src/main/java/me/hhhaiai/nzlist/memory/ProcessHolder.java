@@ -2,11 +2,11 @@ package me.hhhaiai.nzlist.memory;
 
 import android.text.TextUtils;
 
+import me.hhhaiai.nzlist.interfaces.IProcesBase;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
-
-import me.hhhaiai.nzlist.interfaces.IProcesBase;
 
 /**
  * @Copyright © 2021 analsys Inc. All rights reserved.
@@ -17,8 +17,8 @@ import me.hhhaiai.nzlist.interfaces.IProcesBase;
  */
 public class ProcessHolder {
 
-
-    private ConcurrentHashMap<String, IProcesBase> mMemoryMap = new ConcurrentHashMap<String, IProcesBase>();
+    private ConcurrentHashMap<String, IProcesBase> mMemoryMap =
+            new ConcurrentHashMap<String, IProcesBase>();
 
     public void addPorceser(IProcesBase proceser) {
         if (proceser != null && !TextUtils.isEmpty(proceser.getName())) {
@@ -38,7 +38,7 @@ public class ProcessHolder {
         if (res.size() > 0) {
             return res.toArray(new String[res.size()]);
         }
-        return new String[]{};
+        return new String[] {};
     }
 
     public synchronized IProcesBase getPorceserByName(String name) {
@@ -47,7 +47,6 @@ public class ProcessHolder {
         }
         return null;
     }
-
 
     /********************* get instance begin **************************/
     public static ProcessHolder getInstance() {
@@ -58,8 +57,7 @@ public class ProcessHolder {
         private static final ProcessHolder INSTANCE = new ProcessHolder();
     }
 
-    private ProcessHolder() {
-    }
+    private ProcessHolder() {}
     /********************* get instance end **************************/
 
 }

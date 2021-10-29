@@ -26,11 +26,6 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
-
 import me.hhhaiai.nzlist.R;
 import me.hhhaiai.nzlist.interfaces.IProcesBase;
 import me.hhhaiai.nzlist.memory.ProcessHolder;
@@ -41,6 +36,11 @@ import me.hhhaiai.nzlist.utils.NzAppLog;
 import me.hhhaiai.nzlist.utils.PinyinComparator;
 import me.hhhaiai.nzlist.utils.ui.NzSearchEditText;
 import me.hhhaiai.nzlist.utils.ui.NzSideBar;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * @Copyright © 2016 sanbo Inc. All rights reserved.
@@ -55,7 +55,6 @@ public class NzListActivity extends Activity {
     public static final int ESHOWSTATUS_SHOW_USERAPPS = 0;
     public static final int ESHOWSTATUS_SHOW_SYSTEM = 1;
     public static final int ESHOWSTATUS_SHOW_SYSTEM_HAS_LUNCH = 2;
-
 
     private Context mContext;
     private ListView sortListView;
@@ -72,6 +71,7 @@ public class NzListActivity extends Activity {
      * 汉字转换成拼音的类
      */
     private CharacterParser characterParser;
+
     private List<AppModel> appNameList;
 
     /**
@@ -85,23 +85,24 @@ public class NzListActivity extends Activity {
     private Thread mFlushThread = new Thread(new ShowappHandler());
     // 更新UI
     @SuppressLint("HandlerLeak")
-    private Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            initUI();
+    private Handler mHandler =
+            new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    initUI();
 
-            // 根据a-z进行排序源数据
-            Collections.sort(appNameList, pinyinComparator);
-            adapter = new NzAdapter(NzListActivity.this, appNameList);
-            sortListView.setAdapter(adapter);
+                    // 根据a-z进行排序源数据
+                    Collections.sort(appNameList, pinyinComparator);
+                    adapter = new NzAdapter(NzListActivity.this, appNameList);
+                    sortListView.setAdapter(adapter);
 
-            // 设置监听
-            setListener();
-            if (proDialog != null) {
-                proDialog.dismiss();
-            }
-        }
-    };
+                    // 设置监听
+                    setListener();
+                    if (proDialog != null) {
+                        proDialog.dismiss();
+                    }
+                }
+            };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,7 +118,6 @@ public class NzListActivity extends Activity {
         }
     }
 
-
     private void parserIntent(Intent intent) {
         if (intent == null) {
             return;
@@ -128,14 +128,15 @@ public class NzListActivity extends Activity {
     }
 
     public void onClick(View view) {
-//        if (R.id.ivSetting == view.getId()) {
-//            Toast.makeText(this, "即将支持显示三方app或者所有app", Toast.LENGTH_SHORT).show();
-//        }
+        //        if (R.id.ivSetting == view.getId()) {
+        //            Toast.makeText(this, "即将支持显示三方app或者所有app", Toast.LENGTH_SHORT).show();
+        //        }
 
     }
 
     private void refInstallList() {
-        this.proDialog = ProgressDialog.show(this, "Searching..", "searching..wait....", true, true);
+        this.proDialog =
+                ProgressDialog.show(this, "Searching..", "searching..wait....", true, true);
         new Thread(new ShowappHandler()).start();
     }
 
@@ -162,55 +163,58 @@ public class NzListActivity extends Activity {
      */
     private void setListener() {
         // 设置右侧触摸监听
-        sideBar.setOnTouchingLetterChangedListener(new NzSideBar.OnTouchingLetterChangedListener() {
+        sideBar.setOnTouchingLetterChangedListener(
+                new NzSideBar.OnTouchingLetterChangedListener() {
 
-            @Override
-            public void onTouchingLetterChanged(String s) {
-                // 该字母首次出现的位置
-                int position = adapter.getPositionForSection(s.charAt(0));
-                if (position != -1) {
-                    sortListView.setSelection(position);
-                }
+                    @Override
+                    public void onTouchingLetterChanged(String s) {
+                        // 该字母首次出现的位置
+                        int position = adapter.getPositionForSection(s.charAt(0));
+                        if (position != -1) {
+                            sortListView.setSelection(position);
+                        }
+                    }
+                });
 
-            }
-        });
+        sortListView.setOnItemClickListener(
+                new OnItemClickListener() {
 
-        sortListView.setOnItemClickListener(new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(
+                            AdapterView<?> parent, View view, int position, long id) {
+                        // XxXGlobalContext.choosedModel = (SortModel) adapter.getItem(position);
+                        // setResult(RESULT_OK);
+                        //  finish();
+                    }
+                });
+        sortListView.setOnItemLongClickListener(
+                new OnItemLongClickListener() {
 
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // XxXGlobalContext.choosedModel = (SortModel) adapter.getItem(position);
-                // setResult(RESULT_OK);
-                //  finish();
-            }
-        });
-        sortListView.setOnItemLongClickListener(new OnItemLongClickListener() {
-
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                processLongClick(position);
-                return true;
-            }
-        });
+                    @Override
+                    public boolean onItemLongClick(
+                            AdapterView<?> parent, View view, final int position, long id) {
+                        processLongClick(position);
+                        return true;
+                    }
+                });
 
         // 根据输入框输入值的改变来过滤搜索
-        mClearEditText.addTextChangedListener(new TextWatcher() {
+        mClearEditText.addTextChangedListener(
+                new TextWatcher() {
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // 当输入框里面的值为空，更新为原来的列表，否则为过滤数据列表
-                filterData(s.toString());
-            }
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        // 当输入框里面的值为空，更新为原来的列表，否则为过滤数据列表
+                        filterData(s.toString());
+                    }
 
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    @Override
+                    public void beforeTextChanged(
+                            CharSequence s, int start, int count, int after) {}
 
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
+                    @Override
+                    public void afterTextChanged(Editable s) {}
+                });
     }
 
     /**
@@ -221,35 +225,47 @@ public class NzListActivity extends Activity {
     private void processLongClick(int position) {
 
         final String[] items = ProcessHolder.getInstance().getPorceserNames();
-        Dialog alertDialog = new AlertDialog.Builder(NzListActivity.this).setTitle("操作列表")
-                .setIcon(android.R.drawable.btn_star)
-                .setItems(items, new DialogInterface.OnClickListener() {
+        Dialog alertDialog =
+                new AlertDialog.Builder(NzListActivity.this)
+                        .setTitle("操作列表")
+                        .setIcon(android.R.drawable.btn_star)
+                        .setItems(
+                                items,
+                                new DialogInterface.OnClickListener() {
 
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        AppModel model = (AppModel) adapter.getItem(position);
-                        String pkgName = model.getAppPackageName();
-//                        NzAppLog.i("OnItemLongClickListener: " + pkgName + "------" + items.length + "----" + which);
-                        if (which < items.length) {
-                            String name = items[which];
-                            final IProcesBase pb = ProcessHolder.getInstance().getPorceserByName(name);
-//                            NzAppLog.i("pb: " + pb);
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        AppModel model = (AppModel) adapter.getItem(position);
+                                        String pkgName = model.getAppPackageName();
+                                        //
+                                        // NzAppLog.i("OnItemLongClickListener: " + pkgName +
+                                        // "------" + items.length + "----" + which);
+                                        if (which < items.length) {
+                                            String name = items[which];
+                                            final IProcesBase pb =
+                                                    ProcessHolder.getInstance()
+                                                            .getPorceserByName(name);
+                                            //                            NzAppLog.i("pb: " + pb);
 
-                            if (pb != null) {
-                                new Thread(() -> {
-                                    pb.work(mContext, pkgName);
-                                }).start();
-                            }
-                        }
-                    }
-                })
-//                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-//
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                    }
-//                })
-                .create();
+                                            if (pb != null) {
+                                                new Thread(
+                                                                () -> {
+                                                                    pb.work(mContext, pkgName);
+                                                                })
+                                                        .start();
+                                            }
+                                        }
+                                    }
+                                })
+                        //                .setNegativeButton("取消", new
+                        // DialogInterface.OnClickListener() {
+                        //
+                        //                    @Override
+                        //                    public void onClick(DialogInterface dialog, int which)
+                        // {
+                        //                    }
+                        //                })
+                        .create();
         alertDialog.show();
         alertDialog.getWindow().setLayout(Width - (Width / 8), Heigt - (Heigt / 5));
     }
@@ -278,7 +294,8 @@ public class NzListActivity extends Activity {
             sortModel.setAppLaunchActivity(getLaunchActivityName(packageInfo.packageName));
             sortModel.setIcon(packageInfo.applicationInfo.loadIcon(getPackageManager()));
 
-            if (AppTypeStyle.isSystemApp(packageInfo) || AppTypeStyle.isSystemUpdateApp(packageInfo)) {
+            if (AppTypeStyle.isSystemApp(packageInfo)
+                    || AppTypeStyle.isSystemUpdateApp(packageInfo)) {
                 sortModel.setType(AppModel.Etype.APP_SYSTEM);
             } else {
                 sortModel.setType(AppModel.Etype.APP_USER);
@@ -286,9 +303,9 @@ public class NzListActivity extends Activity {
 
             // 汉字转换成拼音
             String pinyin = characterParser.getSelling(appName);
-            if (TextUtils.isEmpty(pinyin)||pinyin.length()<1){
+            if (TextUtils.isEmpty(pinyin) || pinyin.length() < 1) {
                 sortModel.setSortLetters("#");
-            }else{
+            } else {
                 String sortString = pinyin.substring(0, 1).toUpperCase(Locale.getDefault());
 
                 // 正则表达式，判断首字母是否是英文字母
@@ -299,14 +316,15 @@ public class NzListActivity extends Activity {
                 }
             }
 
-//            // Log.d("sanbo", sortModel.toString());
-//            // mSortList.add(sortModel);
-//            // 非系统软件/非本身软件/非xposed即展示
-//            if (AppModel.Etype.APP_SYSTEM != sortModel.getType() && !"com.xxx".equals(sortModel.getAppPackageName())
-//                    && !"de.robv.android.xposed.installer".equals(sortModel.getAppPackageName())) {
-//                mSortList.add(sortModel);
-//            }
-
+            //            // Log.d("sanbo", sortModel.toString());
+            //            // mSortList.add(sortModel);
+            //            // 非系统软件/非本身软件/非xposed即展示
+            //            if (AppModel.Etype.APP_SYSTEM != sortModel.getType() &&
+            // !"com.xxx".equals(sortModel.getAppPackageName())
+            //                    &&
+            // !"de.robv.android.xposed.installer".equals(sortModel.getAppPackageName())) {
+            //                mSortList.add(sortModel);
+            //            }
 
             if (Status_showSystemApp == ESHOWSTATUS_SHOW_USERAPPS) {
                 if (AppModel.Etype.APP_SYSTEM != sortModel.getType()) {
@@ -319,10 +337,8 @@ public class NzListActivity extends Activity {
                     mSortList.add(sortModel);
                 }
             }
-
         }
         return mSortList;
-
     }
 
     /**
@@ -381,6 +397,4 @@ public class NzListActivity extends Activity {
             mHandler.sendMessage(localMessage);
         }
     }
-
-
 }

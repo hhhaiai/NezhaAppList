@@ -1,6 +1,5 @@
 package com.nz.sdemo;
 
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,9 +30,9 @@ public class MainActivity extends Activity {
 
         ProcessHolder.getInstance().addPorceser(new PortToServer());
         Intent intent = new Intent(MainActivity.this, NzListActivity.class);
-        intent.putExtra(NzListActivity.SHOW_SYSTEM, NzListActivity.ESHOWSTATUS_SHOW_SYSTEM_HAS_LUNCH);
+        intent.putExtra(
+                NzListActivity.SHOW_SYSTEM, NzListActivity.ESHOWSTATUS_SHOW_SYSTEM_HAS_LUNCH);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
-
 }
