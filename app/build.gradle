@@ -1,7 +1,8 @@
 plugins {
     id 'com.android.application'
 }
-
+// 只有./gradlew build有效
+def token = System.getenv("GITHUB_TOKEN")
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
@@ -12,6 +13,7 @@ android {
         targetSdkVersion 30
         versionCode 2
         versionName "1.1"
+        buildConfigField "String", "GITHUB_TOKEN", "\"${token}\""
     }
 
     buildTypes {
@@ -52,7 +54,28 @@ tasks.withType(Javadoc) {
     options.addStringOption('encoding', 'UTF-8')
     options.addStringOption('charSet', 'UTF-8')
 }
+
+
+task mustSetToken {
+    doFirst{
+        token = System.getenv("GITHUB_TOKEN")
+        println("============================")
+        println("token: $token")
+        println("============================")
+    }
+    doLast {
+    }
+}
+
+tasks.whenTaskAdded { task ->
+    if ((task.name == 'javaPreCompileDebug' || task.name == 'javaPreCompileRelease')) {
+        println("==================add======task: ${task.name} ")
+        task.dependsOn 'mustSetToken'
+    }
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':NzAppList')
+    implementation 'com.github.netcapture:Jnt:2.2.1'
 }

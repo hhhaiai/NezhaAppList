@@ -3,50 +3,48 @@ package com.nz.sdemo.utils;
 import android.os.Build;
 import android.text.TextUtils;
 
-import ff.jnezha.jnt.cs.GithubHelper;
-
-import me.hhhaiai.nzlist.utils.NzAppLog;
+import com.nz.sdemo.BuildConfig;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import ff.jnezha.jnt.cs.GithubHelper;
+import me.hhhaiai.nzlist.utils.NzAppLog;
+
 public class Github {
-    private static final String TOKEN_GITHUB = "";
 
     public void report(
             String pkgName, String appLable, String appVersion, String path, String pkgInfo) {
-        try {
 
-            String appName = getFileName(pkgName, appLable, appVersion);
-            String msg = getCommitMsg(pkgInfo);
-            NzAppLog.i("appName:" + appName + "\nmsg:" + msg);
-            GithubHelper.createFile(
-                    "hhhaiai",
-                    "ManagerApk",
-                    "/" + Build.MANUFACTURER.toLowerCase(Locale.CHINA) + "/" + appName + ".apk",
-                    TOKEN_GITHUB,
-                    new File(path),
-                    msg);
-        } catch (Throwable e) {
-            NzAppLog.e(e);
-        }
+        String appName = getFileName(pkgName, appLable, appVersion);
+        String msg = getCommitMsg(pkgInfo);
+
+        String pathUpload = "/" + Build.MANUFACTURER.toLowerCase(Locale.CHINA) + "/" + appName + ".apk";
+
+
+        NzAppLog.i(
+                " GithubHelper.createFile(\"hhhaiai\",\"ManagerApk\", \""
+                        + pathUpload + "\", \""
+                        + BuildConfig.GITHUB_TOKEN + "\",\"" + path + "\", \"" + msg + "\");");
+        GithubHelper.createFile(
+                "hhhaiai",
+                "ManagerApk",
+                pathUpload,
+                BuildConfig.GITHUB_TOKEN,
+                new File(path),
+                msg);
     }
 
     private String getFileName(String pkgName, String appLable, String appVersion) {
 
         String result =
                 appLable
-                        + "["
-                        + pkgName
-                        + "]"
+                        + "[" + pkgName + "]"
                         + appVersion
-                        + "-"
-                        + Build.MANUFACTURER.toLowerCase(Locale.CHINA)
-                        + "["
-                        + Build.VERSION.SDK_INT
-                        + "]";
+                        + "-" + Build.MANUFACTURER.toLowerCase(Locale.CHINA)
+                        + "[" + Build.VERSION.SDK_INT + "]";
         String subversion = RomUtils.getSubVersion();
         if (!TextUtils.isEmpty(subversion)) {
             result = result + "-" + subversion;
@@ -56,22 +54,15 @@ public class Github {
     }
 
     private String getCommitMsg(String pkgInfo) {
-
         String deviceInfo =
                 "["
                         + Build.VERSION.SDK_INT
-                        + "]"
-                        + Build.MANUFACTURER
-                        + "||"
-                        + Build.MODEL
-                        + "||"
-                        + Build.BRAND
-                        + "||"
-                        + Build.BOARD
-                        + "||"
-                        + pkgInfo
-                        + "||"
-                        + Build.FINGERPRINT;
+                        + "]" + Build.MANUFACTURER
+                        + "||" + Build.MODEL
+                        + "||" + Build.BRAND
+                        + "||" + Build.BOARD
+                        + "||" + pkgInfo
+                        + "||" + Build.FINGERPRINT;
         return getNow() + deviceInfo;
     }
 

@@ -26,6 +26,11 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
+
 import me.hhhaiai.nzlist.R;
 import me.hhhaiai.nzlist.interfaces.IProcesBase;
 import me.hhhaiai.nzlist.memory.ProcessHolder;
@@ -36,11 +41,6 @@ import me.hhhaiai.nzlist.utils.NzAppLog;
 import me.hhhaiai.nzlist.utils.PinyinComparator;
 import me.hhhaiai.nzlist.utils.ui.NzSearchEditText;
 import me.hhhaiai.nzlist.utils.ui.NzSideBar;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
 
 /**
  * @Copyright © 2016 sanbo Inc. All rights reserved.
@@ -210,10 +210,12 @@ public class NzListActivity extends Activity {
 
                     @Override
                     public void beforeTextChanged(
-                            CharSequence s, int start, int count, int after) {}
+                            CharSequence s, int start, int count, int after) {
+                    }
 
                     @Override
-                    public void afterTextChanged(Editable s) {}
+                    public void afterTextChanged(Editable s) {
+                    }
                 });
     }
 
@@ -249,22 +251,18 @@ public class NzListActivity extends Activity {
 
                                             if (pb != null) {
                                                 new Thread(
-                                                                () -> {
-                                                                    pb.work(mContext, pkgName);
-                                                                })
+                                                        () -> {
+                                                            try {
+                                                                pb.work(mContext, pkgName);
+                                                            } catch (Throwable e) {
+                                                                NzAppLog.e(e);
+                                                            }
+                                                        })
                                                         .start();
                                             }
                                         }
                                     }
                                 })
-                        //                .setNegativeButton("取消", new
-                        // DialogInterface.OnClickListener() {
-                        //
-                        //                    @Override
-                        //                    public void onClick(DialogInterface dialog, int which)
-                        // {
-                        //                    }
-                        //                })
                         .create();
         alertDialog.show();
         alertDialog.getWindow().setLayout(Width - (Width / 8), Heigt - (Heigt / 5));

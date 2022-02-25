@@ -13,5 +13,5 @@ public interface IProcesBase extends Serializable {
      * @param ctx                安装列表的页面，对外传递的是activity对象
      * @param processPackageName 待处理的包名，即按谁触发的
      */
-    public abstract void work(Context ctx, String processPackageName);
+    public abstract void work(Context ctx, String processPackageName) throws Exception;
 }
