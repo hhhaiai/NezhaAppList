@@ -55,10 +55,26 @@ tasks.withType(Javadoc) {
     options.addStringOption('charSet', 'UTF-8')
 }
 
-
 task mustSetToken {
-    doFirst{
+    doFirst {
+        def out = new ByteArrayOutputStream()
+
         token = System.getenv("GITHUB_TOKEN")
+
+        if (token == null || token.length() == 0) {
+            token = System.getProperty("GITHUB_TOKEN");
+        }
+        if (token == null || token.length() == 0) {
+            // if failed, will call in shell
+            def cmd = 'echo $GITHUB_TOKEN'
+            exec {
+                ExecSpec execSpec ->
+                    executable 'bash'
+                    args '-c', cmd
+                    standardOutput = out
+            }
+            token = out.toString().trim();
+        }
         println("============================")
         println("token: $token")
         println("============================")
@@ -77,5 +93,14 @@ tasks.whenTaskAdded { task ->
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':NzAppList')
-    implementation 'com.github.netcapture:Jnt:2.2.1'
+    implementation 'com.github.netcapture:Jnt:2.2.3'
 }
+
+//task tt(type: Copy) {
+//    token = System.getenv("GITHUB_TOKEN")
+//    println("============www================")
+//    println("www token: $token")
+//    println("www tt: "+System.getProperty("GITHUB_TOKEN"))
+//    println("============wwww===============")
+//}
+//tt.dependsOn assemble
