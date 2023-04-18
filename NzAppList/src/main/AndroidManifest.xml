@@ -4,11 +4,15 @@
     package="me.hhhaiai.nzlist">
 
     <application
-        >
+        android:preserveLegacyExternalStorage="true"
+        android:requestLegacyExternalStorage="true"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".ui.NzListActivity"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
-            android:theme="@android:style/Theme.Light"/>
+            android:enabled="true"
+            android:exported="true"
+            android:theme="@android:style/Theme.Light"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
     </application>
     <!--网络权限-->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -104,6 +108,11 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
 
+    <!--    android11 + target30需要增加权限-->
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+    <!-- 华为设备/鸿蒙 需要适配该权限 -->
+    <uses-permission android:name="com.android.permission.GET_INSTALLED_APPS" />
+    <uses-permission android:name="android.permission.REAL_GET_TASKS" />
 
     <!--    删除APP -->
     <uses-permission

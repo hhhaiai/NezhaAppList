@@ -3,8 +3,6 @@ package com.nz.sdemo.utils;
 import android.os.Build;
 import android.text.TextUtils;
 
-import me.hhhaiai.nzlist.utils.NzAppLog;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.Closeable;
@@ -17,6 +15,8 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+
+import me.hhhaiai.nzlist.utils.NzAppLog;
 
 public class RomUtils {
 
@@ -144,7 +144,7 @@ public class RomUtils {
                                 declaredMethod2.invoke(
                                         Class.forName("android.os.SystemProperties"),
                                         "get",
-                                        new Class[] {String.class, String.class});
+                                        new Class[]{String.class, String.class});
                 method.setAccessible(true);
                 return (String) method.invoke(null, str, "");
             }
